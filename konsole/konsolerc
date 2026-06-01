@@ -1,2 +1,5 @@
 [Desktop Entry]
 DefaultProfile=Ale.profile
+
+[MainWindow]
+State[$d]

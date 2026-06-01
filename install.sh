@@ -15,7 +15,7 @@ for arg in "$@"; do
       ;;
     -h|--help)
       echo "Uso: $0 [--no-deps] [--deps-only]"
-      echo "  Por defecto instala dependencias (OMB, agnoster, Hack, …) y enlaza dotfiles."
+      echo "  Por defecto instala dependencias (OMB, OMZ, agnoster, Hack, …) y enlaza dotfiles."
       exit 0
       ;;
   esac
@@ -52,6 +52,13 @@ link "$DOTFILES/bash/bashrc" "$HOME/.bashrc"
 link "$DOTFILES/bash/bash_aliases" "$HOME/.bash_aliases"
 
 echo
+echo "Zsh:"
+link "$DOTFILES/zsh/zshrc" "$HOME/.zshrc"
+# shellcheck source=bootstrap-deps.sh
+source "$DOTFILES/bootstrap-deps.sh"
+ensure_default_shell_zsh
+
+echo
 echo "Git:"
 link "$DOTFILES/git/gitconfig" "$HOME/.gitconfig"
 
@@ -70,5 +77,5 @@ done
 link "$DOTFILES/konsole/konsolerc" "$HOME/.config/konsolerc"
 
 echo
-echo "Listo. Abre una terminal nueva o ejecuta: source ~/.bashrc"
+echo "Listo. Abre una terminal nueva (shell por defecto: zsh) o ejecuta: exec zsh"
 echo "Konsole: perfil por defecto «Ale». Git: als-code + email noreply de GitHub."
