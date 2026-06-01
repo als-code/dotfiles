@@ -1,0 +1,54 @@
+# ~/.bashrc — symlink al repo dotfiles (ver ./install.sh)
+
+# Solo en sesiones interactivas
+case $- in
+  *i*) ;;
+    *) return;;
+esac
+
+# Raíz del repo (resuelve el symlink ~/.bashrc → …/bash/bashrc)
+if [ -z "${DOTFILES:-}" ]; then
+  _dotfiles_src="${BASH_SOURCE[0]}"
+  [ -L "$_dotfiles_src" ] && _dotfiles_src="$(readlink -f "$_dotfiles_src")"
+  export DOTFILES="$(cd "$(dirname "$_dotfiles_src")/.." && pwd)"
+  unset _dotfiles_src
+fi
+
+# Historial
+HISTCONTROL=ignoreboth:erasedups
+shopt -s histappend
+HISTSIZE=5000
+HISTFILESIZE=10000
+
+# Editor por defecto
+export EDITOR="${EDITOR:-nvim}"
+export VISUAL="$EDITOR"
+export SUDO_EDITOR="$EDITOR"
+
+# Oh My Bash
+export OSH=~/.oh-my-bash
+OSH_THEME="agnoster"
+
+OMB_USE_SUDO=true
+
+completions=(
+  git
+  composer
+  ssh
+)
+
+aliases=(
+  general
+)
+
+plugins=(
+  git
+  bashmarks
+)
+
+source "$OSH"/oh-my-bash.sh
+
+# Aliases y funciones propias (ruta relativa al repo)
+if [ -f "$DOTFILES/bash/bash_aliases" ]; then
+  . "$DOTFILES/bash/bash_aliases"
+fi

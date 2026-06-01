@@ -1,0 +1,42 @@
+# ~/.bash_aliases — aliases personales (bash)
+
+# Navegación
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+# Git
+alias g='git'
+alias gs='git status'
+alias gd='git diff'
+alias gcm='git commit -m'
+alias gcam='git commit -am'
+
+# Neovim: sin argumentos abre el directorio actual
+n() {
+  if [ "$#" -eq 0 ]; then
+    nvim .
+  else
+    nvim "$@"
+  fi
+}
+
+# Abrir archivos o URLs en el entorno gráfico
+open() {
+  xdg-open "$@" >/dev/null 2>&1 &
+}
+
+# Listados mejorados si eza está instalado
+if command -v eza &>/dev/null; then
+  alias ls='eza -lh --group-directories-first --icons=auto'
+  alias lsa='eza -lah --group-directories-first --icons=auto'
+  alias lt='eza --tree --level=2 --long --icons --git'
+fi
+
+# Vista de archivos con bat si está disponible
+if command -v bat &>/dev/null; then
+  alias cat='bat --paging=never'
+fi
+
+# Resumen del sistema (Sonic: ~/.config/fastfetch → repo)
+alias sys='fastfetch --config "$HOME/.config/fastfetch/config.jsonc"'

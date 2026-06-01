@@ -1,0 +1,21 @@
+# ~/.gitconfig — gestionado desde dotfiles (./install.sh)
+# Email noreply de GitHub: https://github.com/settings/emails
+
+[user]
+	name = als-code
+	email = 203623653+als-code@users.noreply.github.com
+
+[init]
+	defaultBranch = main
+
+[push]
+	autoSetupRemote = true
+
+[pull]
+	rebase = false
+
+[color]
+	ui = auto
+
+[diff]
+	colorMoved = default
