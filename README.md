@@ -1,97 +1,105 @@
 # dotfiles
 
-Configuración personal de shell, terminal y herramientas.
+Personal configuration files for shell environments, terminal emulators, and development tools.
 
-## Contenido
+## Configuration Mapping
 
-| Ruta | Destino |
-|------|---------|
-| `bash/bashrc` | `~/.bashrc` — **Oh My Bash** + tema **agnoster** |
-| `bash/bash_aliases` | `~/.bash_aliases` (también cargado desde zsh) |
-| `zsh/zshrc` | `~/.zshrc` — **Oh My Zsh** + **agnoster** + resaltado al escribir |
-| `git/gitconfig` | `~/.gitconfig` (nombre, email noreply GitHub, defaults) |
-| `fastfetch/` | `~/.config/fastfetch/` (config + logo Sonic) |
-| `konsole/` | perfiles en `~/.local/share/konsole/` |
-| `konsole/konsolerc` | `~/.config/konsolerc` — perfil por defecto **Ale** |
+| Source Path | Target Destination | Description |
+|:---|:---|:---|
+| `bash/bashrc` | `~/.bashrc` | Integrates **Oh My Bash** with the **agnoster** theme. |
+| `bash/bash_aliases` | `~/.bash_aliases` | General aliases, additionally sourced by Zsh. |
+| `zsh/zshrc` | `~/.zshrc` | Integrates **Oh My Zsh**, **agnoster**, and syntax highlighting. |
+| `git/gitconfig` | `~/.gitconfig` | Git global configurations (identity, noreply email, defaults). |
+| `fastfetch/` | `~/.config/fastfetch/` | Custom fastfetch configurations and assets (Sonic logo). |
+| `konsole/` | `~/.local/share/konsole/` | Terminal emulator profiles. |
+| `konsole/konsolerc` | `~/.config/konsolerc` | Sets **Ale** as the default Konsole profile. |
 
-## Stack
+## Technology Stack
 
-| Componente | Uso |
-|------------|-----|
-| [Oh My Bash](https://github.com/ohmybash/oh-my-bash) | Framework bash (`~/.oh-my-bash`) |
-| [Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh) | Framework zsh (`~/.oh-my-zsh`) |
-| Tema **agnoster** | Prompt en bash y zsh |
-| [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) | Colorea comandos mientras escribes (válido / inválido) |
-| [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) | Sugerencias grises del historial (→ para aceptar) |
-| Fuente **Hack** | Perfil Konsole Ale (tamaño 13) |
-| [fastfetch](https://github.com/fastfetch-cli/fastfetch) | Comando `sys` |
-| [Konsole](https://apps.kde.org/konsole/) | Terminal KDE |
+| Component | Purpose |
+|:---|:---|
+| [Oh My Bash](https://github.com/ohmybash/oh-my-bash) | Bash framework infrastructure (`~/.oh-my-bash`). |
+| [Oh My Zsh](https://github.com/ohmyzsh/ohmyzsh) | Zsh framework infrastructure (`~/.oh-my-zsh`). |
+| **agnoster** Theme | Powerline-based prompt theme utilized in both Bash and Zsh. |
+| [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting) | Real-time command validation and visual feedback. |
+| [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) | Asynchronous history-based command suggestions (Accept via `→`). |
+| **Hack** Font | Monospace typeface for the **Ale** Konsole profile (Size 13). |
+| [fastfetch](https://github.com/fastfetch-cli/fastfetch) | Backend for the custom system information command (`sys`). |
+| [Konsole](https://apps.kde.org/konsole/) | Default terminal emulator for the KDE desktop environment. |
 
-El prompt **agnoster** usa glifos Powerline; `install.sh` intenta instalar `fonts-powerline` además de **Hack** (Konsole).
+> **Note:** The **agnoster** prompt requires Powerline glyphs. The installation script attempts to provision `fonts-powerline` along with the **Hack** font automatically.
+> *Optional aliases support:* `eza`, `bat`, and `nvim`.
 
-Opcionales en aliases: `eza`, `bat`, `nvim`.
+## Installation
 
-## Instalación
-
-Clona el repo donde quieras. `install.sh` instala dependencias que falten y crea symlinks.
+Clone the repository to any preferred directory. The execution of `install.sh` resolves missing dependencies and configures the appropriate symbolic links.
 
 ```bash
-git clone https://github.com/als-code/dotfiles.git
+git clone [https://github.com/als-code/dotfiles.git](https://github.com/als-code/dotfiles.git)
 cd dotfiles
 chmod +x install.sh bootstrap-deps.sh
 ./install.sh
 source ~/.bashrc
+
 ```
 
-Solo dependencias (sin symlinks):
+### Advanced Installation Flags
+
+To provision dependencies exclusively without modifying symbolic links:
 
 ```bash
 ./install.sh --deps-only
-# o
+# Alternative syntax
 ./bootstrap-deps.sh
+
 ```
 
-Solo symlinks (si ya tienes OMB, Hack, etc.):
+To establish symbolic links exclusively (applicable if frameworks and fonts are pre-installed):
 
 ```bash
 ./install.sh --no-deps
+
 ```
 
-### Dependencias (Debian/Ubuntu)
+### Dependency Verification (Debian/Ubuntu)
 
-`bootstrap-deps.sh` hace lo siguiente si falta algo:
+The `bootstrap-deps.sh` script automates the verification and setup of the following components:
 
-1. **Oh My Bash** → clone en `~/.oh-my-bash`
-2. **agnoster** (bash) → incluido en OMB
-3. **zsh** → paquete `zsh`
-4. **Oh My Zsh** → clone en `~/.oh-my-zsh`
-5. **agnoster** (zsh) + plugins **syntax-highlighting** y **autosuggestions**
-6. **Shell por defecto** → `chsh -s` a zsh (desde `install.sh`)
-7. **Hack** → paquete `fonts-hack`
-8. **Powerline** (prompt agnoster) → paquete `fonts-powerline`
+1. **Oh My Bash** — Cloned into `~/.oh-my-bash`.
+2. **agnoster (Bash)** — Native component within Oh My Bash.
+3. **Zsh** — Provisions the `zsh` package.
+4. **Oh My Zsh** — Cloned into `~/.oh-my-zsh`.
+5. **Plugins & Themes** — Configures Zsh agnoster, `syntax-highlighting`, and `autosuggestions`.
+6. **Default Shell** — Updates the default user shell to Zsh (handled via `install.sh`).
+7. **Typography** — Installs `fonts-hack` and `fonts-powerline`.
 
-En otras distros, instala manualmente:
+### Manual Installation (Other Distributions)
+
+For non-Debian based systems, dependencies can be provisioned manually using the following sequences:
 
 ```bash
-# Oh My Bash
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
+# Provision Oh My Bash
+bash -c "$(curl -fsSL [https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh](https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh))" --unattended
 
-# Oh My Zsh + plugins de resaltado
-RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
-git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
-git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+# Provision Oh My Zsh and associated plugins
+RUNZSH=no CHSH=no sh -c "$(curl -fsSL [https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh](https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh))" --unattended
+git clone --depth=1 [https://github.com/zsh-users/zsh-syntax-highlighting.git](https://github.com/zsh-users/zsh-syntax-highlighting.git) "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
+git clone --depth=1 [https://github.com/zsh-users/zsh-autosuggestions.git](https://github.com/zsh-users/zsh-autosuggestions.git) "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
 
-# Hack: https://sourcefoundry.org/hack/
+# Font Resources: [https://sourcefoundry.org/hack/](https://sourcefoundry.org/hack/)
 ```
 
-Tras `./install.sh`, Konsole abre con el perfil **Ale** por defecto.
+Upon successful execution of `./install.sh`, Konsole will initialize using the **Ale** profile by default.
 
-## Uso
+## Usage and Shortcuts
 
-- `sys` — fastfetch con Sonic (`fastfetch/sonic.txt`).
-- `n` — Neovim en el directorio actual.
-- Git: `g`, `gs`, `gd`, `gcm`, `gcam`.
+* `sys` — Executes `fastfetch` utilizing the custom configuration (`fastfetch/sonic.txt`).
+* `n` — Launches Neovim within the current working directory.
+* **Git Aliases** — Presets include `g`, `gs`, `gd`, `gcm`, and `gcam`.
 
-`DOTFILES` se resuelve al cargar `bashrc` o `zshrc` (raíz del clone, vía symlink).
+The `$DOTFILES` environment variable dynamically resolves to the root folder of the cloned repository during the initialization of `bashrc` or `zshrc`.
 
-`install.sh` deja **zsh** como shell de login con `sudo usermod` (si sudo no pide contraseña) o `chsh` (pedirá tu contraseña de usuario). Abre terminal nueva tras instalar.
+> **System Configuration Note:** The installation script changes the login shell to Zsh using either `sudo usermod` (if passwordless sudo is configured) or `chsh` (which prompts for user authentication). A terminal restart is required post-installation to apply these changes.
+
+
+
