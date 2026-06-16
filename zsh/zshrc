@@ -44,3 +44,6 @@ source "$ZSH/oh-my-zsh.sh"
 if [[ -f "$DOTFILES/bash/bash_aliases" ]]; then
   source "$DOTFILES/bash/bash_aliases"
 fi
+
+# sysdash
+export PATH="$HOME/.local/bin:$PATH"

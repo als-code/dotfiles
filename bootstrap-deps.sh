@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Dependencias del entorno (OMB, OMZ, agnoster, plugins zsh, Hack, …)
+# Dependencias del entorno (OMB, OMZ, agnoster, plugins zsh, Hack, nala, …)
 # Llamado desde install.sh; también: ./bootstrap-deps.sh
 
 set -euo pipefail
@@ -98,6 +98,20 @@ ensure_zsh() {
   echo "  zsh: instalando …"
   _apt_install zsh || true
   command -v zsh &>/dev/null
+}
+
+ensure_nala() {
+  if command -v nala &>/dev/null; then
+    echo "  nala: $(command -v nala) ($(nala --version 2>/dev/null | head -1))"
+    return 0
+  fi
+  echo "  nala: instalando (front-end de apt) …"
+  _apt_install nala || true
+  if command -v nala &>/dev/null; then
+    echo "  nala: instalada (usa «apt» en bash/zsh para invocarla)"
+  else
+    echo "  nala: https://gitlab.com/volian/nala"
+  fi
 }
 
 ensure_oh_my_zsh() {
@@ -213,6 +227,7 @@ bootstrap_deps() {
   ensure_zsh_autosuggestions
   ensure_hack_font
   ensure_powerline_symbols
+  ensure_nala
   echo
 }
 

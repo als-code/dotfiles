@@ -40,3 +40,22 @@ fi
 
 # Resumen del sistema (Sonic: ~/.config/fastfetch → repo)
 alias sys='fastfetch --config "$HOME/.config/fastfetch/config.jsonc"'
+
+# apt → nala (front-end con barra de progreso y mejor salida)
+# «sudo apt» no usa funciones del shell: hace falta interceptar sudo también.
+if command -v nala &>/dev/null; then
+  apt() {
+    command nala "$@"
+  }
+
+  if command -v sudo &>/dev/null; then
+    sudo() {
+      if [ "${1:-}" = apt ]; then
+        shift
+        command sudo nala "$@"
+      else
+        command sudo "$@"
+      fi
+    }
+  fi
+fi

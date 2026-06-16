@@ -1,4 +1,4 @@
-# ~/.gitconfig — gestionado desde dotfiles (./install.sh)
+# ~/.gitconfig — gestionado desde dotfiles (./als-install.sh)
 # Email noreply de GitHub: https://github.com/settings/emails
 
 [user]
