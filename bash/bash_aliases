@@ -58,4 +58,15 @@ if command -v nala &>/dev/null; then
       fi
     }
   fi
-fi
+# Actualizar sistema con nala con un alias
+  aptup() {
+    sudo nala update && sudo nala upgrade -y
+  }
+else
+  aptup() {
+    sudo apt update && sudo apt upgrade -y
+  }
+fi 
+
+
+ 
